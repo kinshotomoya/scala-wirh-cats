@@ -2,8 +2,9 @@ package sandbox.exercise
 
 object Main extends App {
   import PrintableInstances._
+  import PrinterSyntax._
   val cat = Cat("みけ", 222, "red")
-  Printable.print(cat)
+  cat.print
 }
 
 trait Printable[A] {
@@ -30,14 +31,17 @@ object PrintableInstances {
   }
 }
 
-object Printable {
-  def format[A](value: A)(implicit p: Printable[A]) = {
-    p.format(value)
-  }
+final case class Cat(name: String, age: Int, color: String)
 
-  def print[A](value: A)(implicit p: Printable[A]) = {
-    println(format(value))
+
+object PrinterSyntax {
+  implicit class RichPrint[A](value: A) {
+    def format(implicit p: Printable[A]): String = {
+      p.format(value)
+    }
+
+    def print(implicit p: Printable[A]): Unit = {
+      println(p.format(value))
+    }
   }
 }
-
-final case class Cat(name: String, age: Int, color: String)
