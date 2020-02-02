@@ -1,10 +1,8 @@
 package sandbox
 
-import cats.instances.string._
-import cats.syntax.semigroup._
 
 object Main extends App {
-  println("Hello " |+| "Cats!")
+  println("Hello " + "Cats!")
 
   // implicitで定義したインスタンスをimportしている
   // global levelではなく、object内でimportする
@@ -12,7 +10,7 @@ object Main extends App {
   import JsonSyntax._
   val json: Json = Json.toJson(Person("tomoya", "test@gmail.com"))
   val person = Person("tomoya", "test@gmail.com")
-  person.toJson
+  person toJson
 
 
   val personOpt = Some(null)

@@ -1,9 +1,12 @@
-package sandbox.cats
+package sandbox.cats.show
+
+import java.util.Date
+
 import cats.Show
 import cats.instances.int._
 import cats.instances.string._
 import cats.syntax.show._
-import java.util.Date
+import sandbox.cats.show
 
 object Main extends App {
   val showInt: Show[Int] = Show.apply[Int]
@@ -30,8 +33,8 @@ object Main extends App {
   // cat exercise
 
   implicit val catShow: Show[Cat] = Show.show(cat => s"${cat.name} is ${cat.age} years old ${cat.color} cat.")
-  val showCat: Show[sandbox.cats.Cat] = Show.apply[Cat]
-  val cat = sandbox.cats.Cat("ジュラン", 344, "white and black")
+  val showCat: Show[Cat] = Show.apply[Cat]
+  val cat = show.Cat("ジュラン", 344, "white and black")
   showCat.show(cat)
 
 }
