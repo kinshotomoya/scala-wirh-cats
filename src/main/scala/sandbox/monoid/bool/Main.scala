@@ -38,7 +38,7 @@ object Monoid {
 }
 
 object MonoidInstance {
-  // Booleanは４つのMonoidを持っている
+  // Booleanと言う集合に対して、は４つのMonoidを持っている
   implicit val monoidBoolInsAnd: Monoid[Boolean] = new Monoid[Boolean] {
     override def combine(x: Boolean, y: Boolean): Boolean = {
       x && y
