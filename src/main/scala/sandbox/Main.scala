@@ -10,7 +10,7 @@ object Main extends App {
   import JsonSyntax._
   val json: Json = Json.toJson(Person("tomoya", "test@gmail.com"))
   val person = Person("tomoya", "test@gmail.com")
-  person toJson
+  person.toJson
 
 
   val personOpt = Some(null)

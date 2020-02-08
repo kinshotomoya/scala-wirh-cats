@@ -16,12 +16,7 @@ package sandbox.monoid.bool
 //***
 
 
-
-
-
-
 object Main extends App {
-  val value: Monoid[Boolean] = Monoid[Boolean]
 }
 
 
