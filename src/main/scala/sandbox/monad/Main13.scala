@@ -1,5 +1,7 @@
 package sandbox.monad
 
+import cats.{Id, Monad}
+
 object Main13 {
 
   def parseInt(str: String): Option[Int] = {
@@ -32,7 +34,7 @@ object Main14 {
 
     // mapファンクションも、pureとflatMapを組み合わせて実装できる
     def map[A, B](value: F[A])(func: A => B): F[B] = {
-      flatMap(value)(a=> pure(func(a)))
+      flatMap(value)(a => pure(func(a)))
     }
   }
 }
@@ -72,3 +74,67 @@ object Main17 extends App {
 
   val maybeInt: Option[Int] = 1.pure[Option]
 }
+
+
+object Main18 extends App {
+  import cats.Monad
+  import cats.syntax.functor._
+  import cats.syntax.flatMap._
+  import cats.instances.option._
+  import cats.instances.list._
+
+  def sumSquare[F[_]: Monad](a: F[Int], b: F[Int]): F[Int] = {
+    for {
+      x <- a
+      y <- b
+    } yield x*x + y*y
+  }
+
+  sumSquare(Option(1), Option(33))
+  sumSquare(List(111), List(333))
+}
+
+object Main19 extends App {
+  // IDは、型を１つしか持たないモナドになれる
+  // 例えば、"test": Id[String]とすると、モナドになりmap flatMapが使える
+  import cats.Id
+  import cats.syntax.functor._
+  import cats.syntax.flatMap._
+  import cats.Monad
+
+  def sumSquare[F[_]: Monad](a: F[Int], b: F[Int]): F[Int] = {
+    for {
+      x <- a
+      y <- b
+    } yield x*x + y*y
+  }
+
+  sumSquare(3: Id[Int], 4: Id[Int])
+
+  val aaa = "test": Id[String]
+  List(333): Id[List[Int]]
+
+  val value: Id[Int] = Monad[Id].pure(333)
+  val value2: Id[Int] = Monad[Id].flatMap(value)(x => x*2)
+
+}
+
+object Main20 extends App {
+  import cats.Id
+
+  def pure[A](value: A): A = {
+    value
+  }
+
+  def map[A, B](value: Id[A])(func: A => B): Id[B] = {
+    func(value)
+  }
+
+  def flatMap[A, B](value: Id[A])(func: A => Id[B]): Id[B] = {
+    func(value)
+  }
+
+  map(123)(x => x*2)
+  flatMap(345)(x => x*44)
+}
+
