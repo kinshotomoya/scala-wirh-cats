@@ -4,6 +4,18 @@ import cats.{Id, Monad}
 
 object Main13 {
 
+  // monadは、pureファンクションと、faltMapファンクションを持つ
+  // あと、モナド則を満たす
+  // なぜ使うのか
+  // 文脈に依存せずに中身のデータ（本質）を処理できる
+  // ex
+  // List(1, 2, 3).map(x*4)
+  // Listは文脈。1, 2, 3を処理したい
+  // 文脈は他のものもある。
+  // Option Eitherなどもそう。これらは標準で実装されている。
+
+
+
   def parseInt(str: String): Option[Int] = {
     scala.util.Try(str.toInt).toOption
   }
@@ -26,7 +38,6 @@ object Main13 {
 object Main14 {
   import scala.language.higherKinds
 
-  // monadは、pureファンクションと、faltMapファンクションを持つ
   trait Monad[F[_]] {
     def pure[A](value: A): F[A]
 
